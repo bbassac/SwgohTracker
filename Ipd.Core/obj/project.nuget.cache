@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "j5EvuTp60oV2+LwjUiUlAxxPUtSM5WVycNXNKSETJLNuxP7Z1yHnK3fVrKznsy14SUJg2Ce9IhiMbpz23IZVtA==",
+  "success": true,
+  "projectFilePath": "D:\\workspaces\\SwgohTracker\\SwgohTracker\\Ipd.Core\\Ipd.Core.csproj",
+  "expectedPackageFiles": [
+    "D:\\Users\\b.bassac\\.nuget\\packages\\google.protobuf\\3.13.0\\google.protobuf.3.13.0.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\polly\\7.2.1\\polly.7.2.1.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\system.memory\\4.5.2\\system.memory.4.5.2.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,7 @@
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.GameClient.csprojAssemblyReference.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.GameClient.AssemblyInfoInputs.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.GameClient.AssemblyInfo.cs
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.GameClient.csproj.CoreCompileInputs.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Ipd.GameClient.exe
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.GameClient.csproj.CopyComplete

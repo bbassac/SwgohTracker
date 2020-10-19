@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.GameClient.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{665566C4-83F6-4065-A53F-078664E49AF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Ipd.GameClient</AssemblyName>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <RootNamespace>Ipd</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.Protobuf">
+      <HintPath>lib\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Protocol\AuthGuestRequestReflection.cs" />
+    <Compile Include="Game\Protocol\SessionStartContext.cs" />
+    <Compile Include="Game\Protocol\AuthGuestRequest.cs" />
+    <Compile Include="Game\Protocol\DevicePreferences.cs" />
+    <Compile Include="Game\Protocol\AuthGuestResponseReflection.cs" />
+    <Compile Include="Game\Protocol\AuthGuestResponse.cs" />
+    <Compile Include="Game\Protocol\PlayerProfileRequestReflection.cs" />
+    <Compile Include="Game\Protocol\PlayerProfileRequest.cs" />
+    <Compile Include="Game\Protocol\PlayerProfileResponseReflection.cs" />
+    <Compile Include="Game\Protocol\PlayerArenaType.cs" />
+    <Compile Include="Game\Protocol\PlayerProfileResponse.cs" />
+    <Compile Include="Game\Protocol\PlayerArenaStatus.cs" />
+    <Compile Include="Game\Protocol\RequestEnvelopeReflection.cs" />
+    <Compile Include="Game\Protocol\AcceptEncoding.cs" />
+    <Compile Include="Game\Protocol\RequestEnvelope.cs" />
+    <Compile Include="Game\Protocol\ResponseEnvelopeReflection.cs" />
+    <Compile Include="Game\Protocol\ContentEncoding.cs" />
+    <Compile Include="Game\Protocol\ResponseCode.cs" />
+    <Compile Include="Game\Protocol\DynamicMessage.cs" />
+    <Compile Include="Game\Protocol\ResponseEnvelope.cs" />
+    <Compile Include="GameClient\GameClient.cs" />
+    <Compile Include="GameClient\IGameClient.cs" />
+    <Compile Include="GameClient\Models\PlayerArena.cs" />
+    <Compile Include="GameClient\Extensions\StreamExtensions.cs" />
+    <Compile Include="GameClient\Exeptions\GameClientApiException.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

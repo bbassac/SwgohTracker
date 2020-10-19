@@ -1,0 +1,9 @@
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.csprojAssemblyReference.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.AssemblyInfoInputs.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.AssemblyInfo.cs
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.csproj.CoreCompileInputs.cache
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Ipd.deps.json
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Ipd.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Ipd.pdb
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.pdb
