@@ -25,7 +25,7 @@ namespace Ipd.Core.Services
     private async Task SendMessage(string textMessage)
     {
       
-        //Console.WriteLine(textMessage);
+        Console.WriteLine(textMessage);
     }
 
     public async Task SendTextMessage(string textMessage)

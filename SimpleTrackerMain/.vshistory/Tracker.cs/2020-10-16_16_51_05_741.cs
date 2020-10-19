@@ -49,17 +49,15 @@ namespace SimpleTracker
       this.TagProvider = tagProvider;
     }
 
-    public PlayerArenaRank Track()
+    public void Track()
     {
       IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
       AuthResponse auth = ExecutionThrottle.ThrottleSync<Task<AuthResponse>>(2000, (Func<Task<AuthResponse>>) (() => this.PlayerRankService.Login())).Result;
-      //Action<PlayerSettings> action = (Action<PlayerSettings>) (settings => ExecutionThrottle.ThrottleSync(2000, (Action) (() => this.TrackOneAllyCode(settings, auth))));
-      //
-      //result.ForEach<PlayerSettings>(action);
-      return TrackOneAllyCode(result[0], auth);
+      Action<PlayerSettings> action = (Action<PlayerSettings>) (settings => ExecutionThrottle.ThrottleSync(2000, (Action) (() => this.TrackOneAllyCode(settings, auth))));
+      result.ForEach<PlayerSettings>(action);
     }
 
-    public PlayerArenaRank TrackOneAllyCode(PlayerSettings setting, AuthResponse auth)
+    public void TrackOneAllyCode(PlayerSettings setting, AuthResponse auth)
     {
       try
       {
@@ -77,7 +75,7 @@ namespace SimpleTracker
           int? nullable1 = rank2;
           int num1 = rank1;
           if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
-            return result;
+            return;
           int? nullable2 = rank2;
           int num2 = rank1;
           if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
@@ -87,15 +85,11 @@ namespace SimpleTracker
           else
             this.Messenger.SendTextMessage(string.Format("`{0}` dropped from {1} to {2}", (object) result.PlayerName, (object) rank2, (object) rank1)).Wait();
         }
-
-        return result;
       }
       catch (Exception ex)
       {
         this.Logger.Log("Error: " + ex.Message);
-        return new PlayerArenaRank();
       }
-     
     }
   }
 }

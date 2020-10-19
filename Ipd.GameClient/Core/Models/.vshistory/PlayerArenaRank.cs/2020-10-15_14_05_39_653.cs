@@ -13,11 +13,5 @@ namespace Ipd.Core.Models
     public int SquadArenaRank { get; set; }
 
     public int FleetArenaRank { get; set; }
-
-    public override string ToString()
-    {
-        return PlayerName  + "Arene #"+ SquadArenaRank + " Fleet #" + FleetArenaRank;
-    }
-    }
-
+  }
 }

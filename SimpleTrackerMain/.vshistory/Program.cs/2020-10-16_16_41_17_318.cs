@@ -43,8 +43,7 @@ namespace SimpleTracker
                 Tracker tracker = Program.InitTracker();
                 while (true)
                 {
-                PlayerArenaRank result = tracker.Track();
-                Console.WriteLine("BRUNO TROUVE : " + result.ToString());
+                    tracker.Track();
                     Thread.Sleep(180000);
                 }
             

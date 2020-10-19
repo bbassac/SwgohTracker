@@ -77,7 +77,7 @@ namespace SimpleTracker
           int? nullable1 = rank2;
           int num1 = rank1;
           if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
-            return result;
+            return num1;
           int? nullable2 = rank2;
           int num2 = rank1;
           if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
