@@ -16,6 +16,9 @@ nupkg/
 *.user
 *.userosscache
 *.sln.docstates
+.vshistory
+Backup
+
 
 # Build results
 [Dd]ebug/
