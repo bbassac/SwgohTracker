@@ -13,8 +13,7 @@ using Ipd.Core.Models;
 using Ipd.Core.Services;
 using Ipd.Core.Utils;
 using Ipd.GameClient;
-using Ipd.Services;
-using StaticArenaRankStorage = SimpleTracker.Services.StaticArenaRankStorage;
+using SimpleTracker.Services;
 
 namespace Ipd
 {
@@ -53,8 +52,10 @@ namespace Ipd
     public PlayerArenaRank Track()
     {
       IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
-      AuthResponse auth = AuthProvider.Instance.GetAuthentication((PlayerRankService)this.PlayerRankService);
-  
+      AuthResponse auth = ExecutionThrottle.ThrottleSync<Task<AuthResponse>>(2000, (Func<Task<AuthResponse>>) (() => this.PlayerRankService.Login())).Result;
+      //Action<PlayerSettings> action = (Action<PlayerSettings>) (settings => ExecutionThrottle.ThrottleSync(2000, (Action) (() => this.TrackOneAllyCode(settings, auth))));
+      //
+      //result.ForEach<PlayerSettings>(action);
       return TrackOneAllyCode(result[0], auth);
     }
 

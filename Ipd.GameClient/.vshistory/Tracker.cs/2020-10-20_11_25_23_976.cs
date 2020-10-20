@@ -53,7 +53,7 @@ namespace Ipd
     public PlayerArenaRank Track()
     {
       IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
-      AuthResponse auth = AuthProvider.Instance.GetAuthentication((PlayerRankService)this.PlayerRankService);
+      AuthResponse auth = AuthProvider.Instance.GetAuthentication(playerRankService);
   
       return TrackOneAllyCode(result[0], auth);
     }
