@@ -13,25 +13,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Ipd;
 
 namespace SimpleTracker
 {
-    public class Program
+    internal class Program
     {
+       
 
-        public static void Main(string[] args)
+
+
+        private static void Main(string[] args)
         {
-            Tracker tracker = Tracker.InitTracker();
-
-
-            while (true)
-            {
+            Tracker tracker = new Tracker();
+                tracker.InitTracker();
+         
+                
+                while (true)
+                {
                 PlayerArenaRank result = tracker.Track();
-                Console.WriteLine(DateTime.Now + " ### " + result.PlayerName + " Arena #" + result.SquadArenaRank + " Fleet #" + result.FleetArenaRank);
-                Thread.Sleep(180000);
-            }
-
+                Console.WriteLine("BRUNO TROUVE : " + result.ToString());
+                    Thread.Sleep(180000);
+                }
+            
         }
 
     }

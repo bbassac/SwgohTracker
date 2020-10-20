@@ -17,10 +17,13 @@ using Ipd;
 
 namespace SimpleTracker
 {
-    public class Program
+    internal class Program
     {
 
-        public static void Main(string[] args)
+
+
+
+        private static void Main(string[] args)
         {
             Tracker tracker = Tracker.InitTracker();
 
@@ -28,7 +31,7 @@ namespace SimpleTracker
             while (true)
             {
                 PlayerArenaRank result = tracker.Track();
-                Console.WriteLine(DateTime.Now + " ### " + result.PlayerName + " Arena #" + result.SquadArenaRank + " Fleet #" + result.FleetArenaRank);
+                Console.WriteLine("BRUNO TROUVE : " + result.ToString());
                 Thread.Sleep(180000);
             }
 

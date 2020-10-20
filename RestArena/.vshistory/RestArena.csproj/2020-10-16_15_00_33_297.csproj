@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ipd.GameClient\Ipd.csproj" />
-    <ProjectReference Include="..\SimpleTrackerMain\SimpleTracker.csproj" />
   </ItemGroup>
 
 

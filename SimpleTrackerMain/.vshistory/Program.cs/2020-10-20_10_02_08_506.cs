@@ -28,7 +28,7 @@ namespace SimpleTracker
             while (true)
             {
                 PlayerArenaRank result = tracker.Track();
-                Console.WriteLine(DateTime.Now + " ### " + result.PlayerName + " Arena #" + result.SquadArenaRank + " Fleet #" + result.FleetArenaRank);
+                Console.WriteLine("BRUNO TROUVE : " + result.ToString());
                 Thread.Sleep(180000);
             }
 

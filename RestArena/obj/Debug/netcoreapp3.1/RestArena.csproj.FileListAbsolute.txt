@@ -25,3 +25,8 @@ D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Polly.
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Ipd.dll
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Ipd.pdb
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\obj\Debug\netcoreapp3.1\RestArena.csproj.CopyComplete
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\SimpleTracker.exe
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\SimpleTracker.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\SimpleTracker.pdb
