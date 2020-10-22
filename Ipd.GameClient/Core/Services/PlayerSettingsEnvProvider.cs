@@ -25,7 +25,8 @@ namespace Ipd.Core.Services
 
     public async Task<IList<PlayerSettings>> GetPlayerSettingAsync()
     {
-      IEnumerable<string> codes = ((IEnumerable<string>) (Environment.GetEnvironmentVariable("ALLY_CODES") ?? "").Trim().Split(',')).Select<string, string>((Func<string, string>) (ac => ac.Trim().Replace("-", ""))).Distinct<string>();
+      IEnumerable<string> codes = ((IEnumerable<string>) (Environment.GetEnvironmentVariable("ALLY_CODES") ?? "").Trim()
+                .Split(',')).Select<string, string>((Func<string, string>) (ac => ac.Trim().Replace("-", ""))).Distinct<string>();
       Dictionary<string, string> tags = await this.GetTagsAsync();
       return (IList<PlayerSettings>) codes.Select<string, PlayerSettings>((Func<string, PlayerSettings>) (ac => new PlayerSettings()
       {
@@ -60,10 +61,10 @@ namespace Ipd.Core.Services
           else
           {
             string str = strArray[0].NormalizeAllyCode();
-            long result = 0;
-            if (!long.TryParse(str, out result) || str.Length != 9)
+            long resultParse = 0;
+            if (!long.TryParse(str, out resultParse) || str.Length != 9)
               this._logger.Log("Error: ally code `" + strArray[0] + "` should consist of 9 digits.");
-            
+            result.Add(str, strArray[1]);
           }
         }));
         return Task.FromResult<Dictionary<string, string>>(result);

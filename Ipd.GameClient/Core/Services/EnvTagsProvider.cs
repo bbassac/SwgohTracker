@@ -45,10 +45,10 @@ namespace Ipd.Core.Services
           else
           {
             string str = strArray[0].NormalizeAllyCode();
-            long result = 0;
-            if (!long.TryParse(str, out result) || str.Length != 9)
+            long allycode = 0;
+            if (!long.TryParse(str, out allycode) || str.Length != 9)
               this._logger.Log("Error: ally code `" + strArray[0] + "` should consist of 9 digits.");
-     
+         
           }
         }));
         return Task.FromResult<Dictionary<string, string>>(result);

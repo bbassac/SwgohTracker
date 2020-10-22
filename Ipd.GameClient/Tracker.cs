@@ -18,83 +18,116 @@ using StaticArenaRankStorage = SimpleTracker.Services.StaticArenaRankStorage;
 
 namespace Ipd
 {
-  public class Tracker
-  {
-
-      private IDiscordMessenger Messenger { get; set; }
-
-    private IPlayerSettingsProvider PlayerSettingsProvider { get; set; }
-
-    private IArenaRankStorage ArenaRankStorage { get; set; }
-
-    private IPlayerRankService PlayerRankService { get; set; }
-
-    private ILog Logger { get; set; }
-
-    private ArenaType ArenaType { get; set; }
-
-    public Tracker(
-      IDiscordMessenger messenger,
-      IPlayerSettingsProvider playerSettingsProvider,
-      IArenaRankStorage arenaRankStorage,
-      IPlayerRankService playerRankService,
-      ILog logger,
-      ITagsProvider tagProvider,
-      ArenaType arenaType)
+    public class Tracker
     {
-      this.Messenger = messenger;
-      this.PlayerSettingsProvider = playerSettingsProvider;
-      this.ArenaRankStorage = arenaRankStorage;
-      this.PlayerRankService = playerRankService;
-      this.Logger = logger;
-      this.ArenaType = arenaType;
-    }
 
-    public PlayerArenaRank Track()
-    {
-      IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
-      AuthResponse auth = AuthProvider.Instance.GetAuthentication((PlayerRankService)this.PlayerRankService);
-  
-      return TrackOneAllyCode(result[0], auth);
-    }
+        private IDiscordMessenger Messenger { get; set; }
 
-    public PlayerArenaRank TrackOneAllyCode(PlayerSettings setting, AuthResponse auth)
-    {
-      try
-      {
-        PlayerArenaRank result = this.PlayerRankService.GetPlayerRank(setting.AllyCode, auth).Result;
-        int rank1 = this.ArenaType == ArenaType.Fleet ? result.FleetArenaRank : result.SquadArenaRank;
-        int? rank2 = this.ArenaRankStorage.GetRank(setting.AllyCode);
-        this.ArenaRankStorage.SaveRank(setting.AllyCode, rank1);
-        if (!rank2.HasValue)
+        private IPlayerSettingsProvider PlayerSettingsProvider { get; set; }
+
+        private IArenaRankStorage ArenaRankStorage { get; set; }
+
+        private IPlayerRankService PlayerRankService { get; set; }
+
+        private ILog Logger { get; set; }
+
+        private ArenaType ArenaType { get; set; }
+
+        private PlayerArenaRank oldResult = null;
+
+        public Tracker(
+          IDiscordMessenger messenger,
+          IPlayerSettingsProvider playerSettingsProvider,
+          IArenaRankStorage arenaRankStorage,
+          IPlayerRankService playerRankService,
+          ILog logger,
+          ITagsProvider tagProvider,
+          ArenaType arenaType)
         {
-          this.Messenger.SendTextMessage(string.Format("`{0}` is at {1}", (object) result.PlayerName, (object) rank1)).Wait();
-        }
-        else
-        {
-          int? nullable1 = rank2;
-          int num1 = rank1;
-          if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
-            return result;
-          int? nullable2 = rank2;
-          int num2 = rank1;
-          if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
-            this.Messenger.SendTextMessage(string.Format("`{0}` climbed from  {1} to {2}", (object) result.PlayerName, (object) rank2, (object) rank1)).Wait();
-          else if (!string.IsNullOrEmpty(setting.DiscordId))
-            this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`({0})` dropped from {1} to {2}", (object) result.PlayerName, (object) rank2, (object) rank1)).Wait();
-          else
-            this.Messenger.SendTextMessage(string.Format("`{0}` dropped from {1} to {2}", (object) result.PlayerName, (object) rank2, (object) rank1)).Wait();
+            this.Messenger = messenger;
+            this.PlayerSettingsProvider = playerSettingsProvider;
+            this.ArenaRankStorage = arenaRankStorage;
+            this.PlayerRankService = playerRankService;
+            this.Logger = logger;
+            this.ArenaType = arenaType;
         }
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        this.Logger.Log("Error: " + ex.Message);
-        return new PlayerArenaRank();
-      }
-     
-    }
+        public PlayerArenaRank Track()
+        {
+            IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
+            AuthResponse auth = AuthProvider.Instance.GetAuthentication((PlayerRankService)this.PlayerRankService);
+
+            return TrackOneAllyCode(result[0], auth);
+        }
+        //TODO refacto gestion des 2 arenes
+        public PlayerArenaRank TrackOneAllyCode(PlayerSettings setting, AuthResponse auth)
+        {
+           
+                PlayerArenaRank result = this.PlayerRankService.GetPlayerRank(setting.AllyCode, auth).Result;
+
+                ManageArena(setting, result);
+                ManageFleet(setting, result);
+
+
+                oldResult = result;
+                return result;
+          
+
+        }
+
+        private void ManageArena(PlayerSettings setting, PlayerArenaRank result)
+        {
+            int rank1 = result.SquadArenaRank;
+      
+ 
+            if (oldResult == null)
+            {
+                this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` is at {1} in Squad Arena", (object)result.PlayerName, (object)rank1)).Wait();
+            }
+            else
+            {
+                int rank2 = oldResult.SquadArenaRank;
+                int? nullable1 = rank2;
+                int num1 = rank1;
+                if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
+                    return ;
+                int? nullable2 = rank2;
+                int num2 = rank1;
+                if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` climbed from  {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+                else if (!string.IsNullOrEmpty(setting.DiscordId))
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`({0})` dropped from {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+                else
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` dropped from {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+            }
+        }
+
+        private void ManageFleet(PlayerSettings setting, PlayerArenaRank result)
+        {
+            int rank1 = result.FleetArenaRank;
+
+
+            if (oldResult == null)
+            {
+                this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` is at {1} in Fleet Arena", (object)result.PlayerName, (object)rank1)).Wait();
+            }
+            else
+            {
+                int rank2 = oldResult.FleetArenaRank;
+                int? nullable1 = rank2;
+                int num1 = rank1;
+                if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
+                    return;
+                int? nullable2 = rank2;
+                int num2 = rank1;
+                if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` climbed from  {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+                else if (!string.IsNullOrEmpty(setting.DiscordId))
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`({0})` dropped from {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+                else
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` dropped from {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+            }
+        }
 
 
         public static Tracker InitTracker()
@@ -102,7 +135,10 @@ namespace Ipd
             ILog _logger;
             Environment.SetEnvironmentVariable("ARENA_TYPE", "SQUAD");
             Environment.SetEnvironmentVariable("ALLY_CODES", "386782543");
-            string strLogger = (Environment.GetEnvironmentVariable("LOGGER_TYPE") ?? "CONSOLE").Trim();
+            Environment.SetEnvironmentVariable("DISCORD_WEB_HOOK", @"https://discord.com/api/webhooks/768119564373327902/dlZTabRJaublShq4cDVdNSi6EECw9xvYtwxLZzpgWfOq_xncymobXvqyToT4-PKAN91H");
+            Environment.SetEnvironmentVariable("DISCORD_TAGS", "386782543|128793207038410752");
+
+           string strLogger = (Environment.GetEnvironmentVariable("LOGGER_TYPE") ?? "CONSOLE").Trim();
             string webHookLogger = (Environment.GetEnvironmentVariable("LOGGER_HOOK") ?? "").Trim();
             _logger =
                 !strLogger.Equals("DISCORD", StringComparison.InvariantCultureIgnoreCase) || string.IsNullOrEmpty(webHookLogger)
@@ -118,12 +154,10 @@ namespace Ipd
             _logger.Log(string.Format("GAME_CLIENT_VERSION: {0}, Arena type: {1}", (object)str,
                 (object)arenaType));
             string webHook = (Environment.GetEnvironmentVariable("DISCORD_WEB_HOOK") ?? "").Trim();
-            if (string.IsNullOrEmpty(webHook))
-                _logger.Log("ENV variable DISCORD_WEB_HOOK not found");
+
             IPlayerSettingsProvider playerSettingsProvider;
             if (!string.IsNullOrEmpty(url))
             {
-                _logger.Log("Ally codes and tags will be loaded from the provided url");
                 playerSettingsProvider = (IPlayerSettingsProvider)new PlayerSettingsUrlProvider(url, _logger);
             }
             else
@@ -133,12 +167,9 @@ namespace Ipd
                 List<string> list1 = result
                     .Select<PlayerSettings, string>((Func<PlayerSettings, string>)(ac => ac.AllyCode))
                     .ToList<string>();
-                _logger.Log(string.Format("Provided ally codes from environment: #{0}", (object)list1.Count));
-                _logger.Log(string.Join<string>(',', (IEnumerable<string>)list1));
+
                 List<string> list2 = result
                     .Select<PlayerSettings, string>((Func<PlayerSettings, string>)(x => x.DiscordId)).ToList<string>();
-                _logger.Log(string.Format("Provided discord tags: #{0}", (object)list2.Count));
-                _logger.Log(string.Join<string>(',', (IEnumerable<string>)list2));
             }
 
             return new Tracker((IDiscordMessenger)new DiscordMessenger(webHook), playerSettingsProvider,

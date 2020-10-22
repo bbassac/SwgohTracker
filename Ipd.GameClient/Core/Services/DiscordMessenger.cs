@@ -16,40 +16,70 @@ using System.Threading.Tasks;
 
 namespace Ipd.Core.Services
 {
-  public class DiscordMessenger : IDiscordMessenger
-  {
-    public string DiscordWebHook { get; private set; }
-
-    public DiscordMessenger(string webHook) => this.DiscordWebHook = webHook;
-
-    private async Task SendMessage(string textMessage)
+    public class DiscordMessenger : IDiscordMessenger
     {
-      
-        //Console.WriteLine(textMessage);
-    }
+        public string DiscordWebHook { get; private set; }
 
-    public async Task SendTextMessage(string textMessage)
-    {
-      try
-      {
-        await this.SendMessage(textMessage);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine("[DiscordMessenger]:Request failed with Exception:[" + ex.Message + "].");
-      }
-    }
+        public DiscordMessenger(string webHook) => this.DiscordWebHook = webHook;
 
-    public async Task SendTextTaggedMessage(string userDiscordId, string textMessage)
-    {
-      try
-      {
-        await this.SendMessage("<@" + userDiscordId + ">" + textMessage);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine("[DiscordMessenger]:Request failed with Exception:[" + ex.Message + "].");
-      }
+        private async Task SendMessage(string textMessage)
+        {
+
+            var data = new { content = textMessage };
+            using HttpClient httpClient = new HttpClient();
+            using StringContent content = new StringContent(JsonConvert.SerializeObject((object)data), Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await Policy.HandleResult<HttpResponseMessage>((Func<HttpResponseMessage, bool>)(r => !r.IsSuccessStatusCode))
+                .RetryAsync<HttpResponseMessage>(3, (Func<DelegateResult<HttpResponseMessage>, int, Context, Task>)(async (result, retryCount, context) =>
+            {
+                if (result.Result.StatusCode != (HttpStatusCode)429)
+                    return;
+                DiscrodRateLimitResponse rateLimitResponse = JsonConvert.DeserializeObject<DiscrodRateLimitResponse>(await result.Result.Content.ReadAsStringAsync(), new JsonSerializerSettings()
+                {
+                    ContractResolver = (IContractResolver)new DefaultContractResolver()
+                    {
+                        NamingStrategy = (NamingStrategy)new SnakeCaseNamingStrategy()
+                    }
+                });
+                if (rateLimitResponse.RetryAfter != 0)
+                {
+                    TimeSpan delay = TimeSpan.FromMilliseconds((double)rateLimitResponse.RetryAfter);
+                    Console.WriteLine(string.Format("[DiscordMessenger]:Request failed with StatusCode({0}). Waiting {1} before next retry. Retry attempt {2}", (object)result.Result.StatusCode, (object)delay, (object)retryCount));
+                    await Task.Delay(delay);
+                }
+                else
+                {
+                    TimeSpan delay = TimeSpan.FromMilliseconds(1000.0);
+                    Console.WriteLine(string.Format("[DiscordMessenger]:Request failed with StatusCode({0}). Waiting {1} before next retry. Retry attempt {2}", (object)result.Result.StatusCode, (object)delay, (object)retryCount));
+                    await Task.Delay(delay);
+                }
+            })).ExecuteAsync((Func<Task<HttpResponseMessage>>)(() => httpClient.PostAsync(this.DiscordWebHook, (HttpContent)content)));
+            if (httpResponseMessage.IsSuccessStatusCode)
+                return;
+            Console.WriteLine(string.Format("[DiscordMessenger]:Request failed with StatusCode({0}).", (object)httpResponseMessage.StatusCode));
+        }
+
+        public async Task SendTextMessage(string textMessage)
+        {
+            try
+            {
+                await this.SendMessage(textMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DiscordMessenger]:Request failed with Exception:[" + ex.Message + "].");
+            }
+        }
+
+        public async Task SendTextTaggedMessage(string userDiscordId, string textMessage)
+        {
+            try
+            {
+                await this.SendMessage("<@" + userDiscordId + ">" + textMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DiscordMessenger]:Request failed with Exception:[" + ex.Message + "].");
+            }
+        }
     }
-  }
 }
