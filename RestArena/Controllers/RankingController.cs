@@ -19,7 +19,7 @@ namespace RestArena.Controllers
         public PlayerArenaRank Get()
         {
             Tracker tracker = Tracker.InitTracker();
-            PlayerArenaRank result = tracker.Track();
+            PlayerArenaRank result = tracker.Track(false);
 
             return result;
         }

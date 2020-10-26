@@ -52,21 +52,21 @@ namespace Ipd
             this.ArenaType = arenaType;
         }
 
-        public PlayerArenaRank Track()
+        public PlayerArenaRank Track(Boolean withDiscordSending)
         {
             IList<PlayerSettings> result = this.PlayerSettingsProvider.GetPlayerSettingAsync().Result;
             AuthResponse auth = AuthProvider.Instance.GetAuthentication((PlayerRankService)this.PlayerRankService);
 
-            return TrackOneAllyCode(result[0], auth);
+            return TrackOneAllyCode(result[0], auth, withDiscordSending);
         }
         //TODO refacto gestion des 2 arenes
-        public PlayerArenaRank TrackOneAllyCode(PlayerSettings setting, AuthResponse auth)
+        private PlayerArenaRank TrackOneAllyCode(PlayerSettings setting, AuthResponse auth, Boolean withDiscordSending)
         {
            
                 PlayerArenaRank result = this.PlayerRankService.GetPlayerRank(setting.AllyCode, auth).Result;
 
-                ManageArena(setting, result);
-                ManageFleet(setting, result);
+                ManageArena(setting, result, withDiscordSending);
+                ManageFleet(setting, result, withDiscordSending);
 
 
                 oldResult = result;
@@ -75,57 +75,43 @@ namespace Ipd
 
         }
 
-        private void ManageArena(PlayerSettings setting, PlayerArenaRank result)
+        private void ManageArena(PlayerSettings setting, PlayerArenaRank result, Boolean withDiscordSending)
         {
-            int rank1 = result.SquadArenaRank;
-      
- 
-            if (oldResult == null)
-            {
-                this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` is at {1} in Squad Arena", (object)result.PlayerName, (object)rank1)).Wait();
-            }
-            else
-            {
-                int rank2 = oldResult.SquadArenaRank;
-                int? nullable1 = rank2;
-                int num1 = rank1;
-                if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
-                    return ;
-                int? nullable2 = rank2;
-                int num2 = rank1;
-                if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` climbed from  {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
-                else if (!string.IsNullOrEmpty(setting.DiscordId))
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`({0})` dropped from {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
-                else
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` dropped from {1} to {2} in Squad Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
-            }
+            TrackResults(setting, result, "in Squad Arena", result.SquadArenaRank, oldResult == null ? 0: oldResult.SquadArenaRank, withDiscordSending);
         }
 
-        private void ManageFleet(PlayerSettings setting, PlayerArenaRank result)
+        private void ManageFleet(PlayerSettings setting, PlayerArenaRank result, Boolean withDiscordSending)
         {
-            int rank1 = result.FleetArenaRank;
+            TrackResults(setting, result, "in Fleet Arena", result.FleetArenaRank, oldResult == null ? 0 : oldResult.FleetArenaRank, withDiscordSending);
+        }
 
-
-            if (oldResult == null)
+        private void TrackResults(PlayerSettings setting, PlayerArenaRank result, string arenaType, int rank1, int rank2, Boolean withDiscordSending)
+        {
+            if (oldResult == null && withDiscordSending)
             {
-                this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` is at {1} in Fleet Arena", (object)result.PlayerName, (object)rank1)).Wait();
+                this.Messenger.SendTextTaggedMessage(setting.DiscordId,
+                    string.Format("`{0}` is at {1} " + arenaType, (object) result.PlayerName, (object) rank1)).Wait();
             }
             else
             {
-                int rank2 = oldResult.FleetArenaRank;
                 int? nullable1 = rank2;
                 int num1 = rank1;
-                if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue)
+                if (nullable1.GetValueOrDefault() == num1 & nullable1.HasValue && withDiscordSending)
                     return;
                 int? nullable2 = rank2;
                 int num2 = rank1;
-                if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue)
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` climbed from  {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
-                else if (!string.IsNullOrEmpty(setting.DiscordId))
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`({0})` dropped from {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
-                else
-                    this.Messenger.SendTextTaggedMessage(setting.DiscordId, string.Format("`{0}` dropped from {1} to {2} in Fleet Arena", (object)result.PlayerName, (object)rank2, (object)rank1)).Wait();
+                if (nullable2.GetValueOrDefault() > num2 & nullable2.HasValue && withDiscordSending)
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId,
+                        string.Format("`{0}` climbed from  {1} to {2} " + arenaType, (object) result.PlayerName, (object) rank2,
+                            (object) rank1)).Wait();
+                else if (!string.IsNullOrEmpty(setting.DiscordId) && withDiscordSending)
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId,
+                        string.Format("`({0})` dropped from {1} to {2} " + arenaType, (object) result.PlayerName,
+                            (object) rank2, (object) rank1)).Wait();
+                else if (withDiscordSending)
+                    this.Messenger.SendTextTaggedMessage(setting.DiscordId,
+                        string.Format("`{0}` dropped from {1} to {2} in " + arenaType, (object) result.PlayerName,
+                            (object) rank2, (object) rank1)).Wait();
             }
         }
 
@@ -133,10 +119,6 @@ namespace Ipd
         public static Tracker InitTracker()
         {
             ILog _logger;
-            Environment.SetEnvironmentVariable("ARENA_TYPE", "SQUAD");
-            Environment.SetEnvironmentVariable("ALLY_CODES", "386782543");
-            Environment.SetEnvironmentVariable("DISCORD_WEB_HOOK", @"https://discord.com/api/webhooks/768119564373327902/dlZTabRJaublShq4cDVdNSi6EECw9xvYtwxLZzpgWfOq_xncymobXvqyToT4-PKAN91H");
-            Environment.SetEnvironmentVariable("DISCORD_TAGS", "386782543|128793207038410752");
 
            string strLogger = (Environment.GetEnvironmentVariable("LOGGER_TYPE") ?? "CONSOLE").Trim();
             string webHookLogger = (Environment.GetEnvironmentVariable("LOGGER_HOOK") ?? "").Trim();
