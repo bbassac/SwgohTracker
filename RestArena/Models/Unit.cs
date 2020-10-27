@@ -8,6 +8,7 @@ namespace RestArena.Models
     public class Unit
     {
         public String Name { get; set; }
+        public String BaseId { get; set; }
         public String Url { get; set; }
         public String Stars { get; set; }
         public String Gear { get; set; }
@@ -24,7 +25,12 @@ namespace RestArena.Models
         public String HealSteal { get; set; }
         public String Protection { get; set; }
         public int Relic { get; set; }
+        public List<String> Categories { get; set; }
+        public String Alignment { get; set; }
         public String Type { get; set; }
+        public String ShipBaseId { get; set; }
+        public String ShipName { get; set; }
+
         public enum UnitType
         {
           CHAR,SHIP

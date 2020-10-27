@@ -17,13 +17,12 @@ namespace RestArena.Controllers
     public class RosterController : ControllerBase
     {
 
-        private static readonly HttpClient client = new HttpClient();
+
 
         [HttpGet]
         public async Task<List<Unit>> GetAsync()
         {
-            var result =  await client.GetStringAsync("https://swgoh.gg/api/player/" + Environment.GetEnvironmentVariable("ALLY_CODES"));
-            return SwgohRosterConverter.convert(result);
+            return await SwgohRosterConverter.GetSwgohDataAsync();
         }
     }
 
