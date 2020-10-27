@@ -40,3 +40,4 @@ msbuild.wrn
 .vs/
 # Credentials
 credentials.json
+/ConsoleGoogle/credentials.json
