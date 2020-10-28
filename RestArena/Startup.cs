@@ -25,6 +25,7 @@ namespace RestArena
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<IGoogleExporter, GoogleExporter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

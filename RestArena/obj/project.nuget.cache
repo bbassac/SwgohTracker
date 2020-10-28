@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "hhab3Qd+8brbPzRK2gqfESLIqJF34KMrA/3Zh04wQn11/jmiEjg3WEMioRCePjYcgMQQLujkbHGA4JIT6VSldQ==",
+  "dgSpecHash": "NfMDJvSwcBH4EjoIF/FygYlOXWZADwZMuzRRmTRgPkZa2kTdeda1glSRiSWwXxc8cbfmqtjEqIYEUXMhYiC0+w==",
   "success": true,
   "projectFilePath": "D:\\workspaces\\SwgohTracker\\SwgohTracker\\RestArena\\RestArena.csproj",
   "expectedPackageFiles": [
+    "D:\\Users\\b.bassac\\.nuget\\packages\\google.apis\\1.49.0\\google.apis.1.49.0.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\google.apis.auth\\1.49.0\\google.apis.auth.1.49.0.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\google.apis.core\\1.49.0\\google.apis.core.1.49.0.nupkg.sha512",
+    "D:\\Users\\b.bassac\\.nuget\\packages\\google.apis.sheets.v4\\1.49.0.2111\\google.apis.sheets.v4.1.49.0.2111.nupkg.sha512",
     "D:\\Users\\b.bassac\\.nuget\\packages\\google.protobuf\\3.5.1\\google.protobuf.3.5.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",

@@ -14,15 +14,22 @@ using SimpleTracker;
 namespace RestArena.Controllers
 {
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("roster")]
-    public class RosterController : ControllerBase
+    [Microsoft.AspNetCore.Mvc.Route("export")]
+    public class ExportController : ControllerBase
     {
+        private readonly IGoogleExporter googleExporter;
+        public ExportController(IGoogleExporter googleExporter)
+        {
+            this.googleExporter = googleExporter;
+        }
+
         
         [HttpGet]
-        public async Task<List<Unit>> GetAsync()
+        public async void GetAsync()
         {
             var result = await SwgohRosterConverter.GetSwgohDataAsync();
-            return result;
+            googleExporter.Export(result);
+           
         }
     }
 

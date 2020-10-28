@@ -23,5 +23,11 @@ D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\MoreLinq.dll
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Polly.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\credentials.json
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google.Apis.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google.Apis.Auth.PlatformServices.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google.Apis.Auth.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
+D:\workspaces\SwgohTracker\SwgohTracker\RestArena\bin\Debug\netcoreapp3.1\Google.Apis.Sheets.v4.dll
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\obj\Debug\netcoreapp3.1\RestArena.csproj.CoreCompileInputs.cache
 D:\workspaces\SwgohTracker\SwgohTracker\RestArena\obj\Debug\netcoreapp3.1\RestArena.MvcApplicationPartsAssemblyInfo.cache

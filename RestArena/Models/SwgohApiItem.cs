@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace RestArena.Models
 {
-    public class Charactercs
+    public class SwgohApiItem
 
     {
         public String ship { get; set; }

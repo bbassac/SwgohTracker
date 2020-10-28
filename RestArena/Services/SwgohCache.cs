@@ -12,8 +12,8 @@ namespace RestArena
     public  class SwgohCache
     {
         private static SwgohCache _instance = null;
-        private List<Charactercs> chars;
-        private List<Charactercs> ships;
+        private List<SwgohApiItem> chars;
+        private List<SwgohApiItem> ships;
         private static HttpClient client;
         private SwgohCache()
         {
@@ -29,20 +29,20 @@ namespace RestArena
             return JsonObject;
         }
 
-        public async Task<List<Charactercs>> GetCharsAsync()
+        public async Task<List<SwgohApiItem>> GetCharsAsync()
         {
             if (chars == null)
             {
-                chars = JsonConvert.DeserializeObject<List<Charactercs>>(await client.GetStringAsync("https://swgoh.gg/api/characters/"));
+                chars = JsonConvert.DeserializeObject<List<SwgohApiItem>>(await client.GetStringAsync("https://swgoh.gg/api/characters/"));
             }
             return chars;
         }
 
-        public async Task<List<Charactercs>> GetShipsAsync()
+        public async Task<List<SwgohApiItem>> GetShipsAsync()
         {
             if (ships == null)
             {
-                ships = JsonConvert.DeserializeObject<List<Charactercs>>(await client.GetStringAsync("https://swgoh.gg/api/ships/"));
+                ships = JsonConvert.DeserializeObject<List<SwgohApiItem>>(await client.GetStringAsync("https://swgoh.gg/api/ships/"));
             }
             return ships;
         }

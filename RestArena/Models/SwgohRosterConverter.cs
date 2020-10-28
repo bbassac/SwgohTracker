@@ -12,14 +12,15 @@ namespace RestArena.Models
 {
     public class SwgohRosterConverter
     {
-
+        static Dictionary<String, String> pilotes = new Dictionary<string, string>();
         public static async Task<List<Unit>> GetSwgohDataAsync()
         {
             var toReturn = new List<Unit>();
 
             dynamic jsonObject = await SwgohCache.Instance.getRoasterAsync();
-            List<Charactercs> chars = await SwgohCache.Instance.GetCharsAsync();
-            List<Charactercs> ships = await SwgohCache.Instance.GetShipsAsync();
+            List<SwgohApiItem> chars = await SwgohCache.Instance.GetCharsAsync();
+            List<SwgohApiItem> ships = await SwgohCache.Instance.GetShipsAsync();
+            pilotes.Clear();
 
             foreach (var item in jsonObject["units"])
             {
@@ -60,9 +61,13 @@ namespace RestArena.Models
                                "&relics=" + unit.Relic +
                                "&side=" + menfinSide;
 
-
                     unit.ShipBaseId = chars.SingleOrDefault(ch => ch.BaseId==unit.BaseId)?.ship;
                     unit.ShipName = ships.SingleOrDefault(sh =>sh.BaseId==unit.ShipBaseId)?.Name;
+                    
+                    if (!String.IsNullOrEmpty(unit.ShipBaseId))
+                    {
+                        pilotes.Add(unit.BaseId, unit.ShipBaseId);
+                    }
                 }
                 else
                 {
@@ -73,8 +78,15 @@ namespace RestArena.Models
                                "&speed=" + unit.Speed;
                 }
                 toReturn.Add(unit);
+                
             }
+            GetPilotesList("MILLENNIUMFALCON");
             return toReturn;
+        }
+
+        public static List<String> GetPilotesList(String shipBaseId)
+        {
+            return (from k in pilotes where k.Value.Equals(shipBaseId) select k.Key ).ToList();
         }
     }
 } 
