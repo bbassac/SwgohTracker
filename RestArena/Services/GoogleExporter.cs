@@ -47,10 +47,11 @@ namespace RestArena
                     {
                       
                         "StormBringer",
-                        unit.Name,
+                        unit.SwgohId,
                         unit.Stars,
                         unit.Level,
                         unit.Gp,
+                        unit.Url
                       
 
                     };
@@ -72,7 +73,7 @@ namespace RestArena
                     {
                         unit.Url,
                         "StormBringer",
-                        unit.Name,
+                        unit.SwgohId,
                         unit.Stars,
                         unit.Gear,
                         unit.Level,

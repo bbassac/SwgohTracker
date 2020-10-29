@@ -36,7 +36,7 @@ namespace RestArena.Models
                 unit.Zetas = swgohUnit["zeta_abilities"] != null ? swgohUnit["zeta_abilities"].Count : 0;
                 unit.Relic = swgohUnit["relic_tier"] > 1 ? swgohUnit["relic_tier"] - 2 : 0;
                 unit.Type = swgohUnit["combat_type"] == 1 ? Unit.UnitType.CHAR.ToString() : Unit.UnitType.SHIP.ToString();
-
+                unit.SwgohId = ((String) swgohUnit["url"]).Split("/")[4];
                 var stats = swgohUnit["stats"];
                 unit.Health = stats["1"];
                 unit.Speed = stats["5"];

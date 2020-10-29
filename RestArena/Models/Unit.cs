@@ -10,6 +10,7 @@ namespace RestArena.Models
         public String Name { get; set; }
         public String BaseId { get; set; }
         public String Url { get; set; }
+        public String SwgohId { get; set; }
         public String Stars { get; set; }
         public String Gear { get; set; }
         public String Level { get; set; }
