@@ -6,3 +6,4 @@ D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\I
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\bin\Debug\netcoreapp3.1\Ipd.pdb
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.dll
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.pdb
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.GameClient\obj\Debug\netcoreapp3.1\Ipd.csprojAssemblyReference.cache

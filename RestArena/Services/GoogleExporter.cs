@@ -61,6 +61,7 @@ namespace RestArena
 
             WriteToSheet(service, range, toReturn);
         }
+
         private void ExportChars(SheetsService service,String range,List<Unit> list)
         {
             CleanRange(service, range);

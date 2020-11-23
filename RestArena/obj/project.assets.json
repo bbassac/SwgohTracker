@@ -4723,6 +4723,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://repository-artifactory.lectra.com/artifactory/api/nuget/nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

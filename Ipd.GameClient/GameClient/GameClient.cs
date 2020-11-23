@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 
 namespace Ipd.GameClient
 {
@@ -111,7 +112,15 @@ namespace Ipd.GameClient
       httpWebRequest.ContentLength = (long) body.Length;
       using (Stream requestStream = httpWebRequest.GetRequestStream())
         requestStream.Write(body, 0, body.Length);
-      return (HttpWebResponse) httpWebRequest.GetResponse();
+      try
+      {
+          return (HttpWebResponse) httpWebRequest.GetResponse();
+      }
+      catch (HttpRequestException ex)
+      {
+          return new HttpWebResponse();
+      }
+  
     }
   }
 }
