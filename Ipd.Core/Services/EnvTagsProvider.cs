@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Ipd.Core.Services.EnvTagsProvider
 // Assembly: Ipd.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 10FD981A-2B33-4DE6-8525-B5BDF64E7AF8
-// Assembly location: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.Core.dll
+// MVID: 69A9BA34-EFF0-4B1E-91D5-6250FF6FB6E4
+// Assembly location: D:\workspaces\SwgohTracker\ImgTraker\archive\Ipd.Core.dll
 
 using Ipd.Core.Extensions;
 using Ipd.Core.Interfaces;
@@ -45,8 +45,8 @@ namespace Ipd.Core.Services
           else
           {
             string str = strArray[0].NormalizeAllyCode();
-            long result = 0;
-            if (!long.TryParse(str, out result) || str.Length != 9)
+            long resultParse = 0;
+            if (!long.TryParse(str, out resultParse) || str.Length != 9)
               this._logger.Log("Error: ally code `" + strArray[0] + "` should consist of 9 digits.");
             else
               result[str] = strArray[1];

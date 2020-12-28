@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Ipd.Core.Services.PlayerSettingsEnvProvider
 // Assembly: Ipd.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 10FD981A-2B33-4DE6-8525-B5BDF64E7AF8
-// Assembly location: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.Core.dll
+// MVID: 69A9BA34-EFF0-4B1E-91D5-6250FF6FB6E4
+// Assembly location: D:\workspaces\SwgohTracker\ImgTraker\archive\Ipd.Core.dll
 
 using Ipd.Core.Extensions;
 using Ipd.Core.Interfaces;
@@ -27,12 +27,14 @@ namespace Ipd.Core.Services
     {
       IEnumerable<string> codes = ((IEnumerable<string>) (Environment.GetEnvironmentVariable("ALLY_CODES") ?? "").Trim().Split(',')).Select<string, string>((Func<string, string>) (ac => ac.Trim().Replace("-", ""))).Distinct<string>();
       Dictionary<string, string> tags = await this.GetTagsAsync();
-      return (IList<PlayerSettings>) codes.Select<string, PlayerSettings>((Func<string, PlayerSettings>) (ac => new PlayerSettings()
+      IList<PlayerSettings> list = (IList<PlayerSettings>) codes.Select<string, PlayerSettings>((Func<string, PlayerSettings>) (ac => new PlayerSettings()
       {
         AllyCode = ac,
         Name = "",
         DiscordId = tags.ContainsKey(ac) ? tags[ac] : ""
       })).ToList<PlayerSettings>();
+      codes = (IEnumerable<string>) null;
+      return list;
     }
 
     private Task<Dictionary<string, string>> GetTagsAsync()
@@ -60,8 +62,8 @@ namespace Ipd.Core.Services
           else
           {
             string str = strArray[0].NormalizeAllyCode();
-            long result = 0;
-            if (!long.TryParse(str, out result) || str.Length != 9)
+            long resultParse = 0;
+            if (!long.TryParse(str, out resultParse) || str.Length != 9)
               this._logger.Log("Error: ally code `" + strArray[0] + "` should consist of 9 digits.");
             else
               result[str] = strArray[1];

@@ -1,71 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--Project was exported from assembly: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.Core.dll-->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2F9E8692-D1DF-4D12-9488-93B6AE3794C8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Ipd.Core</AssemblyName>
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
-    <RootNamespace>Ipd.Core</RootNamespace>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Ipd.GameClient">
-      <HintPath>lib\Ipd.GameClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Polly">
-      <HintPath>lib\Polly.dll</HintPath>
-    </Reference>
-    <Reference Include="netstandard" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NodaTime" Version="3.0.3" />
+    <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Utils\ExecutionThrottle.cs" />
-    <Compile Include="Services\ConsoleDiscordMessenger.cs" />
-    <Compile Include="Services\ConsoleLogger.cs" />
-    <Compile Include="Services\DiscordLogger.cs" />
-    <Compile Include="Services\DiscordMessenger.cs" />
-    <Compile Include="Services\DiscrodRateLimitResponse.cs" />
-    <Compile Include="Services\EnvTagsProvider.cs" />
-    <Compile Include="Services\PlayerRankService.cs" />
-    <Compile Include="Services\PlayerSettingsEnvProvider.cs" />
-    <Compile Include="Services\PlayerSettingsUrlProvider.cs" />
-    <Compile Include="Services\RandomPlayerRankService.cs" />
-    <Compile Include="Models\ArenaType.cs" />
-    <Compile Include="Models\AuthResponse.cs" />
-    <Compile Include="Models\PlayerArenaRank.cs" />
-    <Compile Include="Models\PlayerSettings.cs" />
-    <Compile Include="Interfaces\IAllyCodesProvider.cs" />
-    <Compile Include="Interfaces\IArenaRankStorage.cs" />
-    <Compile Include="Interfaces\IDiscordMessenger.cs" />
-    <Compile Include="Interfaces\ILog.cs" />
-    <Compile Include="Interfaces\IPlayerRankService.cs" />
-    <Compile Include="Interfaces\IPlayerSettingsProvider.cs" />
-    <Compile Include="Interfaces\ITagsProvider.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="AssemblyInfo.cs" />
+    <ProjectReference Include="..\Ipd.GameClient\Ipd.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>

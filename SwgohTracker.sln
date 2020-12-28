@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipd", "Ipd.GameClient\Ipd.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestArena", "RestArena\RestArena.csproj", "{ABB60628-2E0C-4885-B32D-A20415807552}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ipd.Core", "Ipd.Core\Ipd.Core.csproj", "{7F566846-7B23-441B-B4B6-D4318B633CDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTracker", "SimpleTracker\SimpleTracker.csproj", "{CD5ADF44-7986-4C5C-9FFB-D38F9C41DE6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{ABB60628-2E0C-4885-B32D-A20415807552}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABB60628-2E0C-4885-B32D-A20415807552}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABB60628-2E0C-4885-B32D-A20415807552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F566846-7B23-441B-B4B6-D4318B633CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F566846-7B23-441B-B4B6-D4318B633CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F566846-7B23-441B-B4B6-D4318B633CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F566846-7B23-441B-B4B6-D4318B633CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5ADF44-7986-4C5C-9FFB-D38F9C41DE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5ADF44-7986-4C5C-9FFB-D38F9C41DE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5ADF44-7986-4C5C-9FFB-D38F9C41DE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5ADF44-7986-4C5C-9FFB-D38F9C41DE6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

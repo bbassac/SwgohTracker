@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ipd;
-using Ipd.Core.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +19,6 @@ namespace RestArena
 
         public static void Main(string[] args)
         {
-            Environment.SetEnvironmentVariable("ALLY_CODES", "386782543");
 
             CreateHostBuilder(args).Build().Run();
         }

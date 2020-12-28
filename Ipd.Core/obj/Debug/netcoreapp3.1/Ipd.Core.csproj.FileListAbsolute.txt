@@ -1,7 +1,12 @@
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.Core.deps.json
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.Core.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.Core.pdb
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.pdb
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.csprojAssemblyReference.cache
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.AssemblyInfoInputs.cache
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.AssemblyInfo.cs
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.csproj.CoreCompileInputs.cache
-D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Ipd.Core.exe
-D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.csprojAssemblyReference.cache
-D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.csproj.CopyComplete
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.dll
+D:\workspaces\SwgohTracker\SwgohTracker\Ipd.Core\obj\Debug\netcoreapp3.1\Ipd.Core.pdb

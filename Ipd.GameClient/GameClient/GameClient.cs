@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Ipd.GameClient.GameClient
 // Assembly: Ipd.GameClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 70C5118B-19F9-4A1A-8B17-10E7D299DD18
-// Assembly location: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.GameClient.dll
+// MVID: 3F1382BE-46D0-4B2A-9C39-C327EEFCB21C
+// Assembly location: D:\workspaces\SwgohTracker\ImgTraker\archive\Ipd.GameClient.dll
 
 using Google.Protobuf;
 using Ipd.Game.Protocol;
@@ -13,73 +13,52 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 
 namespace Ipd.GameClient
 {
   public class GameClient : IGameClient
   {
+    private readonly string _appVersion;
+
     public string GameClientVersion { get; set; }
 
-    public AuthGuestResponse GetGuestAuth() => AuthGuestResponse.Parser.ParseFrom(ResponseEnvelope.Parser.ParseFrom(this.BasicPostRequest(this.GetRequestEnvelope("AuthRpc", "DoAuthGuest", this.GetAuthGuestRequest())).GetResponseStream().ToByteArray()).Payload.ToByteArray().Unzip());
+    public GameClient(string appVrsion) => this._appVersion = appVrsion;
 
-    public PlayerArena GetPlayerArenaRanks(string playerAllyCode, AuthGuestResponse auth)
+    public PlayerArena GetSlimPlayerArenaRanks(string playerAllyCode)
     {
-      ResponseEnvelope from1 = ResponseEnvelope.Parser.ParseFrom(this.BasicPostRequest(this.GetRequestEnvelope("PlayerRpc", "GetPlayerProfile", new PlayerProfileRequest()
+      ResponseEnvelope from1 = ResponseEnvelope.Parser.ParseFrom(this.BasicPostRequest(this.GetRequestEnvelope("PlayerRpc", "GetPlayerArenaProfile", new PlayerProfileRequest()
       {
         PlayerId = "",
         AllyCode = playerAllyCode.Replace("-", "").Trim()
-      }.ToByteString(), auth.AuthId, auth.AuthToken)).GetResponseStream().ToByteArray());
+      }.ToByteString())).GetResponseStream().ToByteArray());
       if (from1.Code != ResponseCode.Ok)
-        throw new GameClientApiException(string.Format("errorCode:{0}, allyCode:{1}, authId:{2}, token:{3}, {4}", (object) from1.Code, (object) playerAllyCode, (object) auth.AuthId, (object) auth.AuthToken, (object) from1.Message))
+        throw new GameClientApiException(string.Format("errorCode:{0}, allyCode:{1}, {2}", (object) from1.Code, (object) playerAllyCode, (object) from1.Message))
         {
           ErrorCode = from1.Code
         };
-      PlayerProfileResponse from2 = PlayerProfileResponse.Parser.ParseFrom(from1.Payload.ToByteArray().Unzip());
-      int place1 = from2.ArenaStatuses.First<PlayerArenaStatus>((Func<PlayerArenaStatus, bool>) (a => a.ArenaType == PlayerArenaType.SquadArena)).Place;
-      int place2 = from2.ArenaStatuses.First<PlayerArenaStatus>((Func<PlayerArenaStatus, bool>) (a => a.ArenaType == PlayerArenaType.FleetArena)).Place;
+      SlimPlayerArenaProfileResponse from2 = SlimPlayerArenaProfileResponse.Parser.ParseFrom(from1.Payload.ToByteArray().Unzip());
+      int num1 = -1;
+      PlayerPvpProfile playerPvpProfile1 = from2.PvpProfile.FirstOrDefault<PlayerPvpProfile>((Func<PlayerPvpProfile, bool>) (a => a.Tab == PlayerProfileTab.Profilepvpcharacter));
+      if (playerPvpProfile1 != null)
+        num1 = playerPvpProfile1.Rank;
+      int num2 = -1;
+      PlayerPvpProfile playerPvpProfile2 = from2.PvpProfile.FirstOrDefault<PlayerPvpProfile>((Func<PlayerPvpProfile, bool>) (a => a.Tab == PlayerProfileTab.Profilepvpship));
+      if (playerPvpProfile2 != null)
+        num2 = playerPvpProfile2.Rank;
       return new PlayerArena()
       {
         PlayerName = from2.Name,
-        SquadArenaRank = place1,
-        FleetArenaRank = place2
+        SquadArenaRank = num1,
+        FleetArenaRank = num2,
+        PayoutOffsetMinutes = from2.LocalTimeZoneOffsetMinutes
       };
     }
 
-    private ByteString GetAuthGuestRequest()
-    {
-      AuthGuestRequest message = new AuthGuestRequest();
-      message.Uid = this.GenerateRandomUid();
-      message.Language = "en";
-      message.BundleId = "com.ea.game.starwarscapital_row";
-      message.Region = "NA";
-      message.LocalTimeZoneOffsetMinutes = 960;
-      byte[] array;
-      using (MemoryStream memoryStream = new MemoryStream())
-      {
-        message.WriteTo((Stream) memoryStream);
-        array = memoryStream.ToArray();
-      }
-      return ByteString.CopyFrom(array);
-    }
-
-    private string GenerateRandomUid() => Guid.NewGuid().ToString().ToLower().Replace("-", "").Substring(0, 32);
-
-    private byte[] GetRequestEnvelope(
-      string serviceName,
-      string requestMethod,
-      ByteString payload,
-      string auhtId = null,
-      string authToken = null)
+    private byte[] GetRequestEnvelope(string serviceName, string requestMethod, ByteString payload)
     {
       RequestEnvelope message = new RequestEnvelope();
       if (payload != (ByteString) null)
         message.Payload = payload;
-      if (!string.IsNullOrEmpty(auhtId) && !string.IsNullOrEmpty(authToken))
-      {
-        message.AuthId = auhtId;
-        message.AuthToken = authToken;
-      }
       message.CorrelationId = 0;
       message.ServiceName = serviceName;
       message.MethodName = requestMethod;
@@ -94,6 +73,7 @@ namespace Ipd.GameClient
       message.AcceptEncoding = AcceptEncoding.Gzipacceptencoding;
       message.CurrentClientTime = num + 8L;
       message.NetworkAccess = "W";
+      message.Application = this._appVersion ?? "";
       using (MemoryStream memoryStream = new MemoryStream())
       {
         message.WriteTo((Stream) memoryStream);
@@ -105,22 +85,14 @@ namespace Ipd.GameClient
     {
       HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create("https://swprod.capitalgames.com/rpc");
       httpWebRequest.Method = "POST";
-      httpWebRequest.Headers.Add("Content-Type", "application/x-protobuf");
       httpWebRequest.Headers.Add("Connection", "Keep-Alive");
       httpWebRequest.Headers.Add("Accept-Encoding", "gzip");
       httpWebRequest.Headers.Add("Accept-Type", "application/x-protobuf");
+      httpWebRequest.ContentType = "application/x-protobuf";
       httpWebRequest.ContentLength = (long) body.Length;
       using (Stream requestStream = httpWebRequest.GetRequestStream())
         requestStream.Write(body, 0, body.Length);
-      try
-      {
-          return (HttpWebResponse) httpWebRequest.GetResponse();
-      }
-      catch (HttpRequestException ex)
-      {
-          return new HttpWebResponse();
-      }
-  
+      return (HttpWebResponse) httpWebRequest.GetResponse();
     }
   }
 }

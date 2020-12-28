@@ -1,30 +1,35 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:59607",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:57444/",
+      "sslPort": 44320
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "roster",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ALLY_CODES": "386782543",
+        "ARENA_TYPE": "SQUAD|FLEET",
+        "DISCORD_TAGS": "386782543|128793207038410752",
+        "DISCORD_WEB_HOOK": "https://discord.com/api/webhooks/768119564373327902/dlZTabRJaublShq4cDVdNSi6EECw9xvYtwxLZzpgWfOq_xncymobXvqyToT4-PKAN91H"
+
       }
     },
     "RestArena": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "roster",
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }

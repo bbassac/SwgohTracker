@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Ipd.Game.Protocol.RequestEnvelope
 // Assembly: Ipd.GameClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 70C5118B-19F9-4A1A-8B17-10E7D299DD18
-// Assembly location: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.GameClient.dll
+// MVID: 3F1382BE-46D0-4B2A-9C39-C327EEFCB21C
+// Assembly location: D:\workspaces\SwgohTracker\ImgTraker\archive\Ipd.GameClient.dll
 
 using Google.Protobuf;
 using Google.Protobuf.Collections;
@@ -81,6 +81,8 @@ namespace Ipd.Game.Protocol
     private string deviceModel_ = "";
     public const int DeviceIdFieldNumber = 34;
     private string deviceId_ = "";
+    public const int ApplicationFieldNumber = 37;
+    private string application_ = "";
 
     [DebuggerNonUserCode]
     public static MessageParser<RequestEnvelope> Parser => RequestEnvelope._parser;
@@ -89,9 +91,9 @@ namespace Ipd.Game.Protocol
     public static MessageDescriptor Descriptor => RequestEnvelopeReflection.Descriptor.MessageTypes[0];
 
     [DebuggerNonUserCode]
-    MessageDescriptor IMessage.Descriptor => ResponseEnvelope.Descriptor;
+    MessageDescriptor Google.Protobuf.IMessage.Descriptor => RequestEnvelope.Descriptor;
 
-        [DebuggerNonUserCode]
+    [DebuggerNonUserCode]
     public RequestEnvelope()
     {
     }
@@ -131,6 +133,7 @@ namespace Ipd.Game.Protocol
       this.synergyId_ = other.synergyId_;
       this.deviceModel_ = other.deviceModel_;
       this.deviceId_ = other.deviceId_;
+      this.application_ = other.application_;
       this._unknownFields = UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -347,6 +350,13 @@ namespace Ipd.Game.Protocol
     }
 
     [DebuggerNonUserCode]
+    public string Application
+    {
+      get => this.application_;
+      set => this.application_ = ProtoPreconditions.CheckNotNull<string>(value, nameof (value));
+    }
+
+    [DebuggerNonUserCode]
     public override bool Equals(object other) => this.Equals(other as RequestEnvelope);
 
     [DebuggerNonUserCode]
@@ -356,7 +366,7 @@ namespace Ipd.Game.Protocol
         return false;
       if (other == this)
         return true;
-      return this.CorrelationId == other.CorrelationId && !(this.ServiceName != other.ServiceName) && (!(this.MethodName != other.MethodName) && !(this.Payload != other.Payload)) && (!(this.AuthId != other.AuthId) && !(this.AuthToken != other.AuthToken) && (this.ClientVersion == other.ClientVersion && this.ClientStartupTimestamp == other.ClientStartupTimestamp)) && (!(this.Platform != other.Platform) && !(this.Region != other.Region) && (!(this.ClientExternalVersion != other.ClientExternalVersion) && !(this.ClientInternalVersion != other.ClientInternalVersion)) && (!(this.RequestId != other.RequestId) && this.AcceptEncoding == other.AcceptEncoding && (this.flag_.Equals(other.flag_) && this.telemetryEvent_.Equals(other.telemetryEvent_)))) && (this.CurrentClientTime == other.CurrentClientTime && !(this.NimbleSessionId != other.NimbleSessionId) && (!(this.Timezone != other.Timezone) && !(this.FirmwareVersion != other.FirmwareVersion)) && (!(this.Carrier != other.Carrier) && !(this.NetworkAccess != other.NetworkAccess) && (!(this.HardwareId != other.HardwareId) && !(this.AdvertiserId != other.AdvertiserId))) && (!(this.VendorId != other.VendorId) && !(this.AndroidId != other.AndroidId) && (this.JailbrokenFlag == other.JailbrokenFlag && this.PiracyFlag == other.PiracyFlag) && (!(this.SynergyId != other.SynergyId) && !(this.DeviceModel != other.DeviceModel) && !(this.DeviceId != other.DeviceId)))) && object.Equals((object) this._unknownFields, (object) other._unknownFields);
+      return this.CorrelationId == other.CorrelationId && !(this.ServiceName != other.ServiceName) && (!(this.MethodName != other.MethodName) && !(this.Payload != other.Payload)) && (!(this.AuthId != other.AuthId) && !(this.AuthToken != other.AuthToken) && (this.ClientVersion == other.ClientVersion && this.ClientStartupTimestamp == other.ClientStartupTimestamp)) && (!(this.Platform != other.Platform) && !(this.Region != other.Region) && (!(this.ClientExternalVersion != other.ClientExternalVersion) && !(this.ClientInternalVersion != other.ClientInternalVersion)) && (!(this.RequestId != other.RequestId) && this.AcceptEncoding == other.AcceptEncoding && (this.flag_.Equals(other.flag_) && this.telemetryEvent_.Equals(other.telemetryEvent_)))) && (this.CurrentClientTime == other.CurrentClientTime && !(this.NimbleSessionId != other.NimbleSessionId) && (!(this.Timezone != other.Timezone) && !(this.FirmwareVersion != other.FirmwareVersion)) && (!(this.Carrier != other.Carrier) && !(this.NetworkAccess != other.NetworkAccess) && (!(this.HardwareId != other.HardwareId) && !(this.AdvertiserId != other.AdvertiserId))) && (!(this.VendorId != other.VendorId) && !(this.AndroidId != other.AndroidId) && (this.JailbrokenFlag == other.JailbrokenFlag && this.PiracyFlag == other.PiracyFlag) && (!(this.SynergyId != other.SynergyId) && !(this.DeviceModel != other.DeviceModel) && (!(this.DeviceId != other.DeviceId) && !(this.Application != other.Application))))) && object.Equals((object) this._unknownFields, (object) other._unknownFields);
     }
 
     [DebuggerNonUserCode]
@@ -454,6 +464,8 @@ namespace Ipd.Game.Protocol
         num5 ^= this.DeviceModel.GetHashCode();
       if (this.DeviceId.Length != 0)
         num5 ^= this.DeviceId.GetHashCode();
+      if (this.Application.Length != 0)
+        num5 ^= this.Application.GetHashCode();
       if (this._unknownFields != null)
         num5 ^= this._unknownFields.GetHashCode();
       return num5;
@@ -612,6 +624,11 @@ namespace Ipd.Game.Protocol
         output.WriteRawTag((byte) 146, (byte) 2);
         output.WriteString(this.DeviceId);
       }
+      if (this.Application.Length != 0)
+      {
+        output.WriteRawTag((byte) 170, (byte) 2);
+        output.WriteString(this.Application);
+      }
       if (this._unknownFields == null)
         return;
       this._unknownFields.WriteTo(output);
@@ -680,6 +697,8 @@ namespace Ipd.Game.Protocol
         num2 += 2 + CodedOutputStream.ComputeStringSize(this.DeviceModel);
       if (this.DeviceId.Length != 0)
         num2 += 2 + CodedOutputStream.ComputeStringSize(this.DeviceId);
+      if (this.Application.Length != 0)
+        num2 += 2 + CodedOutputStream.ComputeStringSize(this.Application);
       if (this._unknownFields != null)
         num2 += this._unknownFields.CalculateSize();
       return num2;
@@ -750,6 +769,8 @@ namespace Ipd.Game.Protocol
         this.DeviceModel = other.DeviceModel;
       if (other.DeviceId.Length != 0)
         this.DeviceId = other.DeviceId;
+      if (other.Application.Length != 0)
+        this.Application = other.Application;
       this._unknownFields = UnknownFieldSet.MergeFrom(this._unknownFields, other._unknownFields);
     }
 
@@ -853,6 +874,9 @@ namespace Ipd.Game.Protocol
             continue;
           case 274:
             this.DeviceId = input.ReadString();
+            continue;
+          case 298:
+            this.Application = input.ReadString();
             continue;
           default:
             this._unknownFields = UnknownFieldSet.MergeFieldFrom(this._unknownFields, input);

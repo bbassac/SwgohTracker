@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Ipd.Core.Models;
 using Newtonsoft.Json;
 using RestArena.Models;
 

@@ -1,8 +1,8 @@
 ﻿// Decompiled with JetBrains decompiler
 // Type: Ipd.Game.Protocol.PlayerProfileRequest
 // Assembly: Ipd.GameClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 70C5118B-19F9-4A1A-8B17-10E7D299DD18
-// Assembly location: E:\workspace\Workspace-perso\app-tracker-swgoh\app\Ipd.GameClient.dll
+// MVID: 3F1382BE-46D0-4B2A-9C39-C327EEFCB21C
+// Assembly location: D:\workspaces\SwgohTracker\ImgTraker\archive\Ipd.GameClient.dll
 
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
@@ -27,7 +27,7 @@ namespace Ipd.Game.Protocol
     public static MessageDescriptor Descriptor => PlayerProfileRequestReflection.Descriptor.MessageTypes[0];
 
     [DebuggerNonUserCode]
-    MessageDescriptor IMessage.Descriptor => ResponseEnvelope.Descriptor;
+    MessageDescriptor Google.Protobuf.IMessage.Descriptor => PlayerProfileRequest.Descriptor;
 
     [DebuggerNonUserCode]
     public PlayerProfileRequest()
