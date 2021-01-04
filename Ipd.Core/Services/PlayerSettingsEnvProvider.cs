@@ -63,7 +63,8 @@ namespace Ipd.Core.Services
           {
             string str = strArray[0].NormalizeAllyCode();
             long resultParse = 0;
-            if (!long.TryParse(str, out resultParse) || str.Length != 9)
+                
+                if (!long.TryParse(str, out resultParse) || str.Length != 9)
               this._logger.Log("Error: ally code `" + strArray[0] + "` should consist of 9 digits.");
             else
               result[str] = strArray[1];

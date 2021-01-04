@@ -24,12 +24,17 @@ namespace SimpleTracker
 
     static Program()
     {
-      
 
-        Environment.SetEnvironmentVariable("ALLY_CODES", "386782543");
-        Environment.SetEnvironmentVariable("ARENA_TYPE", "SQUAD");
-        Environment.SetEnvironmentVariable("DISCORD_TAGS", "386782543|128793207038410752");
-        Environment.SetEnvironmentVariable("DISCORD_WEB_HOOK", "https://discord.com/api/webhooks/768119564373327902/dlZTabRJaublShq4cDVdNSi6EECw9xvYtwxLZzpgWfOq_xncymobXvqyToT4-PKAN91H");
+
+            //Environment.SetEnvironmentVariable("ALLY_CODES", Environment.GetEnvironmentVariable("ALLY_CODES", EnvironmentVariableTarget.User));
+            //Environment.SetEnvironmentVariable("ARENA_TYPE", Environment.GetEnvironmentVariable("ARENA_TYPE", EnvironmentVariableTarget.User));
+           // Environment.SetEnvironmentVariable("DISCORD_TAGS", Environment.GetEnvironmentVariable("DISCORD_TAGS", EnvironmentVariableTarget.User));
+           // Environment.SetEnvironmentVariable("DISCORD_WEB_HOOK", Environment.GetEnvironmentVariable("DISCORD_WEB_HOOK", EnvironmentVariableTarget.User));
+           // Program.Logger.Log("ALLY_CODES: " + Environment.GetEnvironmentVariable("ALLY_CODES"));
+           // Program.Logger.Log("ARENA_TYPE: " + Environment.GetEnvironmentVariable("ARENA_TYPE"));
+          //  Program.Logger.Log("DISCORD_TAGS: " + Environment.GetEnvironmentVariable("DISCORD_TAGS" ));
+          //  Program.Logger.Log("DISCORD_WEB_HOOK: " + Environment.GetEnvironmentVariable("DISCORD_WEB_HOOK" ));
+
 
             string str = (Environment.GetEnvironmentVariable("LOGGER_TYPE") ?? "CONSOLE").Trim();
       string webHook = (Environment.GetEnvironmentVariable("LOGGER_HOOK") ?? "").Trim();
